@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>SVG in Canvas test</title>
+    <link href='http://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <style>
+        /*
+         * Background image style from lea.verou.me (http://lea.verou.me/css3patterns/#blueprint-grid)
+        */
+        html {
+            min-height:100%;        
+        }
+        body {
+            font-family:Calibri, Helvetica, Arial, sans-serif;
+            background-color:#269;            
+            background-image: background: -moz-linear-gradient(white 2px, transparent 2px),
+                -moz-linear-gradient(0, white 2px, transparent 2px);
+                -moz-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+                -moz-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+            background-image: -ms-linear-gradient(white 2px, transparent 2px),
+                -ms-linear-gradient(0, white 2px, transparent 2px),
+                -ms-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+                -ms-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+            background-image: -o-linear-gradient(white 2px, transparent 2px),
+                -o-linear-gradient(0, white 2px, transparent 2px),
+                -o-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+                -o-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+            background-image: -webkit-linear-gradient(white 2px, transparent 2px),
+                -webkit-linear-gradient(0, white 2px, transparent 2px),
+                -webkit-linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+                -webkit-linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+            background-image: linear-gradient(white 2px, transparent 2px),
+                linear-gradient(0, white 2px, transparent 2px),
+                linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+                linear-gradient(0, rgba(255,255,255,.3) 1px, transparent 1px);
+            background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
+            background-size:50px;
+        }
+        form {
+            margin-bottom:2em;
+            font-size:1.5em;
+            clear:left;
+        }
+        h1,
+        h2,
+        fieldset {
+            font-family: 'Pontano Sans', 'Calibri', Helvetica, sans-serif;
+            font-weight:300;
+        }
+        h1 {
+            color:#CC4733;
+            font-size:3em;
+            padding:0.25em 0.5em;
+            background:white;
+            -webkit-border-radius:4px;
+            -moz-border-radius:4px;
+            -o-border-radius:4px;
+            border-radius:4px;
+            -webkit-box-shadow:5px 5px 10px #333;
+            -moz-box-shadow:5px 5px 10px #333;
+            -o-box-shadow:5px 5px 10px #333;
+            box-shadow:5px 5px 10px #333;
+            float:left;
+        }
+        h2 {
+            clear:both;
+            color:#CC4733;
+            text-transform:uppercase;
+            margin:0;
+            padding:0.5em 1em;
+            background:#fff;
+            display:inline-block;
+            border:solid #333 1px;
+            border-bottom:none;
+            -webkit-border-radius:4px 4px 0px 0px;
+            -moz-border-radius:4px 4px 0px 0px;
+            -o-border-radius:4px 4px 0px 0px;
+            border-radius:4px 4px 0px 0px;
+            position:relative;
+            bottom:-1px;
+        }
+        fieldset,
+        div {
+            background:#fff;    
+        }
+        .main {
+            background:transparent;
+            clear:both;
+            padding-bottom:2em;
+        }
+        fieldset {
+            padding:1em 1em;
+            border:solid 1px #333;
+            -webkit-border-radius:0px 4px 4px 4px;
+            -moz-border-radius:0px 4px 4px 4px;
+            -o-border-radius:0px 4px 4px 4px;
+            border-radius:0px 4px 4px 4px;
+            margin-left:0;
+        }
+        label,
+        textarea,
+        input {
+            display:block;
+            margin-bottom:1em;            
+        }
+        textarea,
+        input {
+            font-size:1em;
+            padding:0.6em;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        label {
+            color:#269;
+        }        
+        #canvasContainer,
+        #imageContainer {
+            border:#333 1px solid;
+            padding:16px;
+            -webkit-border-radius:0px 4px 4px 4px;
+            -moz-border-radius:0px 4px 4px 4px;
+            -o-border-radius:0px 4px 4px 4px;
+            border-radius:0px 4px 4px 4px;
+            margin-bottom:3em;
+        }
+        #canvasContainer canvas {
+            box-shadow:4px 4px 10px #333;
+        }
+        #imageContainer img {
+            border:red 1px solid;
+            padding:2px;
+        }
+        h2 a {
+            font-size:0.75em;
+            text-decoration:none;
+            padding-left:0.5em;
+        }
+        h2 a:hover,
+        h2 a:focus {
+            text-decoration:underline;    
+        }
+        .button {
+            padding:0.5em;
+            color:#333;
+            font-size:1.5em;
+            text-shadow: 0 1px 1px rgba(0,0,0,.3);
+            -webkit-border-radius: .5em; 
+            -moz-border-radius: .5em;
+            -o-border-radius: .5em;
+            border-radius: .5em;
+            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+            -o-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+            box-shadow: 0 1px 2px rgba(0,0,0,.2);
+            color: #fef4e9;
+            border: solid 1px #da7c0c;
+            background: #f78d1d;
+            background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+            background: -ms-linear-gradient(top,  #faa51a,  #f47a20);
+            background: -o-linear-gradient(top,  #faa51a,  #f47a20);
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#faa51a), to(#f47a20));
+            background: -webkit-linear-gradient(top,  #faa51a,  #f47a20);
+            background: linear-gradient(top,  #faa51a,  #f47a20);
+        }
+        .button,
+        .button:hover,
+        .button:focus {
+            text-decoration:none;
+            cursor:pointer;
+        }
+        .button:hover,
+        .button:focus {
+            background: #f47c20;
+            background: -moz-linear-gradient(top,  #f88e11,  #f06015);
+            background: -ms-linear-gradient(top,  #f88e11,  #f06015);
+            background: -o-linear-gradient(top,  #f88e11,  #f06015);
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#f88e11), to(#f06015));
+            background: -webkit-linear-gradient(top,  #f88e11,  #f06015);
+            background: linear-gradient(top,  #f88e11,  #f06015);
+        }
+        .button:active {
+            color: #fcd3a5;
+            background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
+            background: -ms-linear-gradient(top,  #f47a20,  #faa51a);
+            background: -o-linear-gradient(top,  #f47a20,  #faa51a);
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#f47a20), to(#faa51a));
+            background: -webkit-linear-gradient(top,  #f47a20,  #faa51a);
+            background: linear-gradient(top,  #f47a20,  #faa51a);
+        }
+        form .button {
+            font-size:1em;
+            margin-top:1em;
+        }
+    </style>
+    <!--
+    
+    This tool is inspired by the work done by Lea Verou on CSS3 Gradients on http://lea.verou.me
+    
+    The cssgradient.js JavaScript file uses scripts used in the CSS3 gradient tool here: http://lea.verou.me/demos/cssgradientsplease/
+    
+    The downloadImageFromCanvas method in the gradient2File.js JavaScript file uses an approach found in the canvas2image script from http://www.nihilogic.dk/labs/canvas2image/
+    
+    -->
+</head>
+
+<body>
+    <h1>Linear gradient image generator</h1>
+    <div class="main">
+        <h2>Gradient details</h2>
+        <form action="" method="get" id="details">
+            <fieldset>
+                <label for="css">CSS for gradient</label>
+                <textarea id="css" cols="80" rows="6" name="css">linear-gradient(transparent 50%, red 50%)</textarea>
+                <label for="elementWidth">Element width (px)</label>
+                <input id="elementWidth" name="elementWidth" value="700" />
+                <label for="elementHeight">Element height (px)</label>
+                <input id="elementHeight" name="elementHeight" value="53" />
+                <input type="submit" value="convert" class="button" />
+            </fieldset>
+        </form>
+        <h2>Canvas rendering</h2>
+        <div id="canvasContainer"></div>
+        <h2>Resulting image <a href="#" id="warpImage" data-alt="(stretched view)" data-status="actual" title="Click to change">(actual size view)</a> - right click to save</h2>
+        <div id="imageContainer"></div>
+        <a href="#" id="download" class="button">Download image</a>
+    </div>
+    <script type="text/javascript" src="scripts/cssgradient.js"></script>
+    <script type="text/javascript" src="scripts/convertgradient.js"></script>
+    <script type="text/javascript" src="scripts/gradient2File.js"></script>
+    <script type="text/javascript" src="scripts/main.js" ></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 *CSS Gradient image generator*
 
-A tool for generating images from linear gradient CSS.
+A tool for generating images from linear gradient CSS. Sits on http://tombye.github.com/CSS3-Gradient-image-generator/
 
 **Intention**
 

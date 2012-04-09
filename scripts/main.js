@@ -5,8 +5,23 @@
         downloadLink = document.getElementById('download'),
         imageWarpLink = document.getElementById('warpImage'),
         debug = {
+            reset : function () {
+                var inputs = form.getElementsByTagName('input'),
+                    textarea = document.getElementById('css');
+                    
+                document.getElementById('errors-result').innerHTML = "";
+                
+                for (a = 0, b = inputs.length; a < b; a++) {
+                    if (inputs[a].type !== 'submit') {
+                        inputs[a].className = inputs[a].className.replace("errors", "");
+                    }
+                }
+                
+                textarea.className = textarea.className.replace('errors', '');
+            },
             log : function (str) {
-                console.log(str);    
+                document.getElementById('errors-result').innerHTML = str;
+                document.getElementById(this.source).className += ' errors';
             }
         },
         gradientObj,
@@ -22,18 +37,23 @@
             linearGradient = LinearGradient.parse(val),
             height = document.getElementById('elementHeight').value,
             width = document.getElementById('elementWidth').value;
+        
+        debug.reset();
             
         if (linearGradient === null) {
+            debug.source = 'css';
             debug.log('Gradient unable to be parsed. Please check the syntax and that the text box contains only the gradient and no other characters');
             return;
         }
         
         if (val === '') {
+            debug.source = 'css';
             debug.log('No gradient specified');
             return;
         }
         
         if (height === '') {
+            debug.source = 'elementHeight';
             debug.log('No height specified');
             return;
         } else {
@@ -41,6 +61,7 @@
         }
         
         if (width === '') {
+            debug.source = 'elementWidth';
             debug.log('No width specified');
             return;
         } else {
@@ -51,6 +72,7 @@
             gradientObj = new window.ConvertGradient(linearGradient, width, height);
         }
         catch (e) {
+            debug.source = 'css';
             debug.log(e.message);
             return;
         }

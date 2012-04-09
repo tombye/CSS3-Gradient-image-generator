@@ -51,6 +51,10 @@ window.ConvertGradient.prototype = {
             nullRanges = [],
             nullRange = [],
             stopVal,
+            lastValInRange,
+            firstValInRange,
+            rangeLen,
+            unitVal,
             angle = this.angle,
             height = this.height,
             width = this.width,
@@ -125,11 +129,23 @@ window.ConvertGradient.prototype = {
         
         // set values of all positions set to null
         for (a = 0, b = nullRanges.length; a < b; a++) {
+            
+            rangeLen = nullRanges[a].length;
+            firstValInRange = nullRanges[a][0];
+            lastValInRange = nullRanges[a][rangeLen - 1];
+            
+            // get boundary values of range
+            lastStop = stops[firstValInRange - 1].position;
+            nextStop = stops[lastValInRange + 1].position;
+            
+            // get values for a stop in the range
+            unitVal = ((nextStop - lastStop) / (rangeLen + 1));
+            
             for (x = 0, y = nullRanges[a].length; x < y; x++) {
                 stopVal = nullRanges[a][x];
-                lastStop = stops[stopVal - 1].position;
-                nextStop = stops[stopVal + 1].position;
-                stops[stopVal].position = (lastStop + nextStop) / 2;
+                
+                // get value by multiplying unit by (index + 1)                
+                stops[stopVal].position = lastStop + (unitVal * (x + 1));
             }
         }
         

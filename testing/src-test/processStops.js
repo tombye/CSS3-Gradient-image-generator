@@ -156,6 +156,197 @@ processStopsTest.prototype.test3PointNull = function() {
     assertEquals(1, result[2].position);
 };
 
+processStopsTest.prototype.test6PointNull = function() {
+    var result;
+
+    window.ConvertGradient.prototype.originObj = {
+        stops : [
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            }
+        ]
+    }
+    
+    result = window.ConvertGradient.prototype.processStops();
+    
+    assertEquals(0, result[0].position);
+    assertEquals(0.2, result[1].position);
+    assertEquals(0.4, result[2].position);
+    assertEquals(0.6000000000000001, result[3].position);
+    assertEquals(0.8, result[4].position);
+    assertEquals(1, result[5].position);
+};
+
+processStopsTest.prototype.test8PointNull = function() {
+    var result;
+
+    window.ConvertGradient.prototype.originObj = {
+        stops : [
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            }
+        ]
+    }
+    
+    result = window.ConvertGradient.prototype.processStops();
+    
+    assertEquals(0, result[0].position);
+    assertEquals(0.14285714285714285, result[1].position);
+    assertEquals(0.2857142857142857, result[2].position);
+    assertEquals(0.42857142857142855, result[3].position);
+    assertEquals(0.5714285714285714, result[4].position);
+    assertEquals(0.7142857142857142, result[5].position);
+    assertEquals(0.8571428571428571, result[6].position);
+    assertEquals(1, result[7].position);
+};
+
+processStopsTest.prototype.test6PointNull1Percent = function() {
+    var result;
+
+    window.ConvertGradient.prototype.originObj = {
+        stops : [
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : '50%'
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            }
+        ]
+    }
+    
+    result = window.ConvertGradient.prototype.processStops();
+    
+    assertEquals(0, result[0].position);
+    assertEquals(0.16666666666666666, result[1].position);
+    assertEquals(0.3333333333333333, result[2].position);
+    assertEquals(0.5, result[3].position);
+    assertEquals(0.75, result[4].position);
+    assertEquals(1, result[5].position);
+};
+
+processStopsTest.prototype.test6PointNull2Percent = function() {
+    var result;
+
+    window.ConvertGradient.prototype.originObj = {
+        stops : [
+            {
+                position : null
+            },
+            {
+                position : '10%'
+            },
+            {
+                position : null
+            },
+            {
+                position : '50%'
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            }
+        ]
+    }
+    
+    result = window.ConvertGradient.prototype.processStops();
+    
+    assertEquals(0, result[0].position);
+    assertEquals(0.1, result[1].position);
+    assertEquals(0.30000000000000004, result[2].position);
+    assertEquals(0.5, result[3].position);
+    assertEquals(0.75, result[4].position);
+    assertEquals(1, result[5].position);
+};
+
+processStopsTest.prototype.test6PointNull2Pixel = function() {
+    var result;
+    
+    window.ConvertGradient.prototype.width = 100;
+    window.ConvertGradient.prototype.height = 100;
+
+    window.ConvertGradient.prototype.originObj = {
+        stops : [
+            {
+                position : null
+            },
+            {
+                position : '20px'
+            },
+            {
+                position : null
+            },
+            {
+                position : null
+            },
+            {
+                position : '90px'
+            },
+            {
+                position : null
+            }
+        ]
+    }
+    
+    result = window.ConvertGradient.prototype.processStops();
+    
+    assertEquals(0, result[0].position);
+    assertEquals(0.2, result[1].position);
+    assertEquals(0.43333333333333335, result[2].position);
+    assertEquals(0.6666666666666666, result[3].position);
+    assertEquals(0.9, result[4].position);
+    assertEquals(1, result[5].position);
+};
+
 processStopsTest.prototype.test5PointNullMix1 = function() {
     var result;
     

@@ -124,7 +124,19 @@
         }
         label {
             color:#269;
-        }        
+        }
+        .inline-label,
+        .inline-radio {
+            display:inline;
+            vertical-align:middle;
+        }
+        .inline-label {
+            
+        }
+        .inline-radio {
+            margin:0 2em;
+            width:auto;
+        }
         #canvasContainer,
         #imageContainer {
             border:#333 1px solid;
@@ -242,6 +254,10 @@
                 <input id="elementWidth" name="elementWidth" value="700" class="error" />
                 <label for="elementHeight">Element height (px)</label>
                 <input id="elementHeight" name="elementHeight" value="53" class="error" />
+                <label class="inline-label" for="singleDim">Single pixel repeater image</label>
+                <input class="inline-radio" type="radio" name="imageType" id="singleDim" value="Single pixel" checked="checked" />
+                <label class="inline-label" for="bothDim">Full dimension image</label>
+                <input class="inline-radio" type="radio" name="imageType" id="bothDim" value="Full dimension" />                
                 <input type="submit" value="convert" class="button" />
             </fieldset>
         </form>

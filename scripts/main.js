@@ -4,6 +4,7 @@
         imageContainer = document.getElementById('imageContainer'),
         downloadLink = document.getElementById('download'),
         imageWarpLink = document.getElementById('warpImage'),
+        singleDimRadio = document.getElementById('singleDim'),
         debug = {
             reset : function () {
                 var inputs = form.getElementsByTagName('input'),
@@ -79,12 +80,17 @@
         if (document.getElementById('canvas')) {
             document.getElementById('canvasContainer').removeChild(document.getElementById('canvas'));
         }
-        renderer = new Gradient2File('canvas', 'canvasContainer', 'imageContainer');
+        renderer = new Gradient2File('canvas', 'canvasContainer', 'imageContainer', 'singleDim');
         renderer.createCanvas(width, height);
         renderer.drawCanvasGradient(gradientObj, width, height);
         renderer.embedImageFromCanvas(gradientObj);
         
-        imageWarpLink.style.display = 'inline';
+        if (singleDimRadio.checked && (imageWarpLink.style.display === 'none')) {
+            imageWarpLink.style.display = 'inline';
+        }
+        if (!singleDimRadio.checked && (imageWarpLink.style.display === 'inline')) {
+            imageWarpLink.style.display = 'none';
+        }
         downloadLink.style.display = 'inline-block';
     }
     

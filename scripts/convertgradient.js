@@ -78,10 +78,10 @@ window.ConvertGradient.prototype = {
         }
         
         getStopFloat = function (str) {
-            var result = str.match(/(\d+)%/);
+            var result = str.match(/([\d\.]+)%/);
             
             if (result) {
-                return (1 / 100) * parseFloat(result[1]);
+                return parseFloat(result[1]) / 100;
             } else {
                 result = str.match(/(\d+)px/);
                 if (result) {

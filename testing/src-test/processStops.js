@@ -597,3 +597,37 @@ processStopsTest.prototype.testCreatedLastColour = function() {
     
     assertEquals('#ffffff', result[result.length - 1].color);
 };
+processStopsTest.prototype.testDecimalPercentage = function() {
+    var result;
+
+    window.ConvertGradient.prototype.originObj = {
+        stops : [
+            {
+                position : '10.11%'
+            }
+        ]
+    }
+    
+    result = window.ConvertGradient.prototype.processStops();
+    
+    assertEquals(0.1011, result[result.length - 2].position);
+};
+processStopsTest.prototype.testMultipleDecimalPercentage = function() {
+    var result;
+
+    window.ConvertGradient.prototype.originObj = {
+        stops : [
+            {
+                position : '59.44567%'
+            },
+            {
+                position : '88.345345%'
+            }
+        ]
+    }
+    
+    result = window.ConvertGradient.prototype.processStops();
+    
+    assertEquals(0.5944567, result[1].position);
+    assertEquals(0.88345345, result[2].position);
+};
